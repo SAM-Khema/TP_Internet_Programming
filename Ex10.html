@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrollable content2</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        .container{
+            height:300px;
+            width: 45%;
+            border: 2px solid black ;
+        }
+        .header{
+            text-align: center;
+            background-color: rgb(239,90,115);
+            height: 40px;
+            padding-top: 20px;
+            font-size: 1rem;
+            /* width: 45%; */
+        }
+        .content{
+            /* background-color: lightblue; */
+            height: 250px;
+            overflow: auto;
+            /* width:45%; */
+            
+        }
+        .row-wrapper{
+            display: table;
+            height: 250px;
+            display:flex;
+            /* padding: 10px; */
+        }
+        .column-wrapper{
+            float: left;
+        }
+        .box{
+            width: 100px;
+            margin-top: 20px;
+            margin-left: 10px;
+            height: 50px;
+            padding: 10px;
+            font-size: 20px;
+            background-color: rgb(89, 254, 89);
+            text-align: center;
+            border: 2px solid black ;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Scroll Vertically</div>
+        <div class="content">
+            <div class="row-wrapper">
+                <div class="column-wrapper">
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                </div>
+                <div class="column-wrapper">
+                        <div class="box"></div>
+                        <div class="box"></div>
+                        <div class="box"></div>
+                        <div class="box"></div>
+                        <div class="box"></div>
+                        <div class="box"></div>
+                    <div class="box"></div>
+                </div>
+                <div class="column-wrapper">
+                        <div class="box"></div>
+                        <div class="box"></div>
+                        <div class="box"></div>
+                        <div class="box"></div>
+                        <div class="box"></div>
+                        <div class="box"></div>
+                    <div class="box"></div>
+                </div>
+            <div class="column-wrapper">
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                </div>
+                <div class="column-wrapper">
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                    <div class="box"></div>
+                </div>
+   
+    </div>
+        </div>
+    </div>
+    
+</body>
+</html>

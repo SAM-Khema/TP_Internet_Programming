@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation &variable</title>
+    <style>
+        .wrapper{
+         width: 50%;
+        height: 100px;
+        background: rgb(217, 214, 214);
+        margin: auto;
+        height: 200px;
+        text-align: center;
+        }
+        .drop{
+            position: relative;
+        }
+        .drop:nth-child(1){
+            animation: grow 3s 1s,
+            drop 5s forwards;
+        }
+        .drop:nth-child(2){
+            animation: grow 5s 1s, 
+            drop 10s forwards;
+        }
+        .drop:nth-child(3){
+            animation: grow  7s, 1s, 
+            drop 15s, forwards;
+        }      
+
+        @keyframes grow {
+            0%,100%{transform: scale(1);}
+            60%{transform: scale(2);}
+        }
+        @keyframes drop {
+            0%{top:-100px;}
+            100%{top: 100px;}
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <span class="drop" style = "--order: 1" >&#129395;</span>
+        <span class="drop" style = "--order: 2" >&#129322;</span>
+        <span class="drop" style = "--order: 3" >&#129321;</span>
+    </div>
+    
+</body>
+</html>

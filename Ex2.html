@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Center-position</title>
+    <style>
+        .wrapper{
+            width: 50%;
+            position: relative;
+            background-color: rgb(93, 136, 174);
+            height:500px;
+            margin:auto;
+        }
+         .flying-box{
+            position: absolute;
+            border: 1px solid rgb(5, 5, 5);
+            background-color: red;
+            padding-top: 50px;
+            text-align: center;
+            width:30%;
+            top: 50%;
+            left:50%; 
+            
+            height:70px;
+            transform: translate(-50%,-50%);  
+    } 
+    </style>
+</head>
+<body>
+    <div class = "wrapper">
+        <div class = "flying-box " >
+            I'm in the center &#128514;.
+        </div>
+    </div>
+</body>
+</html>

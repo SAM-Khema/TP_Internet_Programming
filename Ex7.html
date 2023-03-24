@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive</title>
+    <style>
+        .wrapper{ 
+            height: 500px; 
+            margin: auto; 
+        }@media screen AND (min-width: 300px ){
+            .content{
+            width: clamp(300px, 50vw, 800px); 
+            height: 500px; 
+            background-color: rgb(127, 255, 146);
+            margin: auto; 
+            }
+        }   
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="content">
+        </div>
+    </div>
+</body>
+</html>
