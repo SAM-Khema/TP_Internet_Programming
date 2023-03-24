@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Side Bar</title>
+    <style>
+        body{
+            font-family: sans-serif;
+        }
+        .side{
+            height: 90%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: rgb(12, 137, 186);
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        } 
+        .side a{
+            text-align: center;
+            padding: 8px 8px 8px 32px;
+            font: 1em sans-serif;
+            color: gainsboro;
+            display: block;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .side a:hover {
+            color:rgb(49, 48, 48) ;
+        }
+
+        .side .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            color: red;
+        }
+        #sidebar{
+            transition: margin-left .5s;
+            /* padding: 10px; */
+            padding-left: 300px;    
+            /* padding-right: 500px; */
+        }
+        @media screen and (max-height: 450px) {
+            .side {padding-top: 15px;}
+            .side a {font-size: 18px;}
+        }
+        h1{
+            text-align: center;
+        }
+        .container{
+            /* width: 50%; */
+            width: fit-content;
+            border: 4px solid black;
+            height: 720px;
+        }
+        .icon{
+            align-items: center;
+            padding-left: 5px;
+            padding-top:400px; 
+        }
+
+    </style>
+    
+
+</head>
+<body>
+    <div class="container">
+        <div id="mySidenav" class="side">
+                <h1>SIDE-BAR</h1>
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Project</a>
+                <a href="#">contacts</a>
+
+                <div class="icon">
+                    <svg height="100%"
+                        style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1"
+                        viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:serif="http://www.serif.com/" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g> <path
+                                d="M512,256c0,-141.385 -114.615,-256 -256,-256c-141.385,0 -256,114.615 -256,256c0,127.777 93.616,233.685 216,252.89l0,-178.89l-65,0l0,-74l65,0l0,-56.4c0,-64.16 38.219,-99.6 96.695,-99.6c28.009,0 57.305,5 57.305,5l0,63l-32.281,0c-31.801,0 -41.719,19.733 -41.719,39.978l0,48.022l71,0l-11.35,74l-59.65,0l0,178.89c122.385,-19.205 216,-125.113 216,-252.89Z"
+                                style="fill:#1877f2;fill-rule:nonzero;" />
+                            <path
+                                d="M355.65,330l11.35,-74l-71,0l0,-48.022c0,-20.245 9.917,-39.978 41.719,-39.978l32.281,0l0,-63c0,0 -29.297,-5 -57.305,-5c-58.476,0 -96.695,35.44 -96.695,99.6l0,56.4l-65,0l0,74l65,0l0,178.89c13.033,2.045 26.392,3.11 40,3.11c13.608,0 26.966,-1.065 40,-3.11l0,-178.89l59.65,0Z"
+                                style="fill:#fff;fill-rule:nonzero;" /></g>></svg>
+                    <svg height="100%"
+                        style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;" version="1.1"
+                        viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:serif="http://www.serif.com/" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <rect height="400" style="fill:none;" width="400" x="56" y="56" />
+                        <path
+                            d="M161.014,464.013c193.208,0 298.885,-160.071 298.885,-298.885c0,-4.546 0,-9.072 -0.307,-13.578c20.558,-14.871 38.305,-33.282 52.408,-54.374c-19.171,8.495 -39.51,14.065 -60.334,16.527c21.924,-13.124 38.343,-33.782 46.182,-58.102c-20.619,12.235 -43.18,20.859 -66.703,25.498c-19.862,-21.121 -47.602,-33.112 -76.593,-33.112c-57.682,0 -105.145,47.464 -105.145,105.144c0,8.002 0.914,15.979 2.722,23.773c-84.418,-4.231 -163.18,-44.161 -216.494,-109.752c-27.724,47.726 -13.379,109.576 32.522,140.226c-16.715,-0.495 -33.071,-5.005 -47.677,-13.148l0,1.331c0.014,49.814 35.447,93.111 84.275,102.974c-15.464,4.217 -31.693,4.833 -47.431,1.802c13.727,42.685 53.311,72.108 98.14,72.95c-37.19,29.227 -83.157,45.103 -130.458,45.056c-8.358,-0.016 -16.708,-0.522 -25.006,-1.516c48.034,30.825 103.94,47.18 161.014,47.104"
+                            style="fill:#1da1f2;fill-rule:nonzero;" />
+                    </svg>
+    
+                    <svg fill="none" height="100%" viewBox="0 0 1080 1080" width="32px" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M366.869 524.7H452.549C465.149 524.7 475.649 521.2 484.049 514.2C492.449 506.92 496.649 496.56 496.649 483.12C496.649 468 492.869 457.36 485.309 451.2C477.749 445.04 466.829 441.96 452.549 441.96H366.869V524.7ZM314.369 399.12H460.109C486.989 399.12 508.549 405.28 524.789 417.6C541.029 429.92 549.149 448.54 549.149 473.46C549.149 488.58 545.369 501.6 537.809 512.52C530.529 523.16 520.029 531.42 506.309 537.3V538.14C524.789 542.06 538.789 550.88 548.309 564.6C557.829 578.04 562.589 594.98 562.589 615.42C562.589 627.18 560.489 638.24 556.289 648.6C552.089 658.68 545.509 667.5 536.549 675.06C527.589 682.34 516.109 688.22 502.109 692.7C488.109 696.9 471.449 699 452.129 699H314.369V399.12ZM366.869 656.16H459.689C475.649 656.16 487.969 652.1 496.649 643.98C505.609 635.58 510.089 623.82 510.089 
+                        608.7C510.089 593.86 505.609 582.52 496.649 574.68C487.969 566.56 475.649 562.5 459.689 562.5H366.869V656.16ZM752.472 571.32C751.912 563.76 750.232 556.48 747.432 549.48C744.912 542.48 741.272 536.46 736.512 531.42C732.032 526.1 726.432 521.9 719.712 518.82C713.272 515.46 705.992 513.78 697.872 513.78C689.472 513.78 681.772 515.32 674.772 518.4C668.052 521.2 662.172 525.26 657.132 530.58C652.372 535.62 648.452 541.64 645.372 548.64C642.572 555.64 641.032 563.2 640.752 571.32H752.472ZM640.752 602.82C640.752 611.22 641.872 619.34 644.112 627.18C646.632 635.02 650.272 641.88 655.032 647.76C659.792 653.64 665.812 658.4 673.092 662.04C680.372 665.4 689.052 667.08 699.132 667.08C713.132 667.08 724.332 664.14 732.732 658.26C741.412 652.1 747.852 643 752.052 630.96H797.412C794.892 642.72 790.552 653.22 
+                        784.392 662.46C778.232 671.7 770.812 679.54 762.132 685.98C753.452 692.14 743.652 696.76 732.732 699.84C722.092 703.2 710.892 704.88 699.132 704.88C682.052 704.88 666.932 702.08 653.772 696.48C640.612 690.88 629.412 683.04 620.172 672.96C611.212 662.88 604.352 650.84 599.592 636.84C595.112 622.84 592.872 607.44 592.872 590.64C592.872 575.24 595.252 560.68 600.012 546.96C605.052 532.96 612.052 520.78 621.012 510.42C630.252 499.78 641.312 491.38 654.192 485.22C667.072 479.06 681.632 475.98 697.872 475.98C714.952 475.98 730.212 479.62 743.652 486.9C757.372 493.9 768.712 503.28 777.672 515.04C786.632 526.8 793.072 540.38 796.992 555.78C801.192 570.9 802.312 586.58 800.352 602.82H640.752ZM637.392 436.92V409.62H758.352V436.92H637.392Z"
+                            fill="url(#paint0_linear)" />
+                        <rect height="760" rx="136.5" stroke="url(#paint1_linear)" stroke-width="27" width="760" x="157.5"
+                            y="159.5" />
+                        <defs><linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear" x1="548.738" x2="548.738"
+                                y1="196.305" y2="781.219">
+                                <stop stop-color="#0059F8" stop-opacity="0.61" />
+                                <stop offset="1" stop-color="#0059F8" />
+                        </linearGradient><linearGradient gradientUnits="userSpaceOnUse" id="paint1_linear" x1="538" x2="534.011" y1="146"y2="932.98">
+                                <stop stop-color="#0059F8" stop-opacity="0.75" />
+                                <stop offset="1" stop-color="#0059F8" /></linearGradient>
+                        </defs>
+                    </svg>
+    
+                    <svg enable-background="new 0 0 32 32" height="100%" id="Layer_1" version="1.0" viewBox="0 0 32 32"
+                        width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g>
+                            <path
+                                d="M32,30c0,1.104-0.896,2-2,2H2c-1.104,0-2-0.896-2-2V2c0-1.104,0.896-2,2-2h28c1.104,0,2,0.896,2,2V30z"
+                                fill="#007BB5" />
+                            <g>
+                                <rect fill="#FFFFFF" height="14" width="4" x="7" y="11" />
+                                <path
+                                    d="M20.499,11c-2.791,0-3.271,1.018-3.499,2v-2h-4v14h4v-8c0-1.297,0.703-2,2-2c1.266,0,2,0.688,2,2v8h4v-7    C25,14,24.479,11,20.499,11z"
+                                    fill="#FFFFFF" />
+                                <circle cx="9" cy="8" fill="#FFFFFF" r="2" />
+                            </g>
+                        </g>
+                    </svg>
+    
+                    <svg aria-labelledby="diamondIconTitle" color="#2329D6" fill="none" height="100%" stroke="#2329D6"
+                        stroke-linecap="square" stroke-linejoin="miter" stroke-width="1" viewBox="0 0 24 24" width="32px"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <title id="diamondIconTitle" />
+                        <path
+                            d="M12 20L3 11M12 20L21 11M12 20L8 11M12 20L16 11M3 11L7 5M3 11H8M7 5L8 11M7 5H12M17 5L21 11M17 5L16 11M17 5H12M21 11H16M8 11H16M8 11L12 5M16 11L12 5" />
+                    </svg>
+                </div>
+            </div>
+            
+            <div id="sidebar">
+                <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+            </div>
+            </div>
+    
+      
+      <script>
+      function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("sidebar").style.marginLeft = "250px";
+      }
+      
+      function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("sidebar").style.marginLeft= "0";
+      }
+      </script>
+</body>
+</html>

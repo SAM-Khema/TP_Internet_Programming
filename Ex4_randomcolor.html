@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper {
+            border: 4px solid black;
+            font-family: sans-serif;
+            color: rgb(60, 0, 255);
+            margin: auto;
+            margin-top: 20px;
+            width: fit-content;
+            background-color: black;
+            text-align: center;
+            height: 600px;
+        }
+        .header {
+            color: #73adff;
+            font-weight: 500;
+            height: 40px;
+            padding-left: 20px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        .container{
+            background-color: black;
+        }
+        .button {
+            margin-top: 20px;
+            height: 50px;
+        }
+
+        .button .button {
+            width: 100px;
+            height: 40px;
+            font-weight: 500;
+            color: white;
+            background-color: black;
+            border: 1px solid black;
+            border-radius: 3px;
+        }
+        #reset {
+            width: 70px;
+            background-color: unset;
+            color: white;
+        }
+        .display {
+            width: 330px;
+            text-align: left;
+            padding: 10px;
+            background-color: white;
+            height: 180px;
+            overflow: auto;
+        }
+        .text {
+            display: flex;
+        }
+    </style>
+</head>
+<body onload="Color.displaycolor()">
+    <div class="wrapper" id="wrapper">
+        <div class="header">Random Color Generator</div>
+        <div class="container">
+            <h1>Background Color </h1>
+            <div id="code">#C30C29</div>
+        </div>
+        <div class="button">
+            <button id="generate" onclick="color.generate()">GENERATE</button>
+            <button id="reset" onclick="color.reset()">RESET</button>
+        </div>
+        <div class="display" id="display"></div>
+    </div>
+    <script>
+        class Color {
+            colorType = "HEX";
+            records = [];
+
+            constructor(type) {
+                this.colorType = type;
+                this.getRecords();
+            }
+            generate() {
+                let color = this.getRandomNumber();
+                this.records.push(color);
+                localStorage.setItem('colorGen', JSON.stringify(this.records));
+                this.displayColor();
+            }
+            displayColor() {
+                document.getElementById("display").innerHTML = "";
+                document.getElementById("wrapper").style.backgroundColor = this.records[this.records.length - 1];
+                document.getElementById("code").innerHTML = this.records[this.records.length - 1];
+
+                for (let i = this.records.length - 1; i >= 0; i--) {
+                    // for(let i=0; i<this.records.length; i++){
+                    document.getElementById("display").innerHTML += `<div class="text">${this.records[i]}<div class="square" style="background-color: ${this.records[i]};"></div> </div> `
+                }
+            }
+            getRandomNumber() {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+            getRecords() {
+                this.records = JSON.parse(localStorage.getItem('colorGen'));
+                // console.log(this.records);
+            }
+            reset() {
+                this.records = [];
+                localStorage.setItem('colorGen', JSON.stringify(this.records));
+                document.getElementById("display").innerHTML = "";
+            }
+        }
+        var color = new Color("HEX");
+    </script>
+</body>
+</html>

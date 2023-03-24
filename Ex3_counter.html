@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Counter</title>
+    <style>
+        .container{
+            display: flex;
+            padding: 250px;
+            margin: auto;
+            justify-content: center;
+            border: 5px solid black;
+            width: 20%;
+            background-color: rgb(9, 249, 249);
+        }
+        .button {
+        background-color: cornsilk;
+        border: none;
+        color: white;
+        text-align: center;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        }
+        h1{
+            color: green;
+            text-align: center;
+        }
+        h2{
+            text-align: center;
+        }
+        #Increase{
+            background-color: rgb(142, 140, 140);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div >
+            <h2>Counter</h2>
+            <h1 id="counter"></h1>
+            <button type="button" id="Decrease" >Decrease</button>
+            <button type="button" id="Reset">Reset</button>
+            <button type="button" id= "Increase">Increase</button>  
+        </div>
+    </div>
+    <script>
+            class Counter{
+                number =0;
+                constructor(){
+                    document.getElementById("counter").innerHTML = localStorage.getItem("counter");
+                }
+                Decrease(){
+                    this.number-=1;
+                    return this.number;
+                }
+                Increase(){
+                    this.number +=1;
+                    return this.number;
+                }
+                Reset(){
+                    this.number =0;
+                    return this.number;
+                }
+            }
+            var counter = new Counter;
+            function Increase(){
+                localStorage.setItem("counter", counter.Increase());
+                document.getElementById("counter").innerHTML = localStorage.getItem("counter");
+
+            }function Decrease(){
+                localStorage.setItem("counter", counter.Decrease());
+                document.getElementById("counter").innerHTML = localStorage.getItem("counter");
+                
+            }function Reset(){
+                localStorage.setItem("counter", counter.Reset());
+                document.getElementById("counter").innerHTML = localStorage.getItem("counter");
+            }
+            document.getElementById("Decrease").addEventListener("click",Decrease);
+            document.getElementById("Increase").addEventListener("click",Increase);
+            document.getElementById("Reset").addEventListener("click",Reset);
+    </script>
+</body>
+</html>

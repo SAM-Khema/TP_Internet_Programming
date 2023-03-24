@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAB</title>
+    <style>
+        .container{
+            border: 5px solid black;
+            width: 50%;
+            margin: auto;
+        }
+        .header{
+            text-align: center;
+        }
+        .sub-container{
+            background-color: rgb(208, 240, 240);
+        }
+        .column{
+            float:left;
+            width: 100%;
+        }
+        .row{
+            display: flex;
+            padding:5px;
+            text-align: center;
+        }
+        .tab{
+            background-color: aliceblue;
+            color: black;
+            float: left;
+            border: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            width: 34%;
+        }
+        .tab:hover {
+            background-color: grey;
+        }
+        .tabcontent {
+            color:rgb(82, 28, 219);
+            display: none;
+            padding: 20px 10px;
+            height: 100%;
+        }
+        #History {
+            background-color: white;
+        }
+        #Vision {
+            background-color: white;
+        }
+        #Goals {
+            background-color: white;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>About</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, aperiam! </p>
+             <img src="./Travel.jpg" alt="pic" width="80%">
+        </div>
+        <div class="sub-container">
+            <div class="row">
+                <button class="tab" onclick="openMenu(this, 'History')">History</button>
+                <button class="tab" onclick="openMenu(this, 'Vision')" id="defaultOpen">Vision</button>
+                <button class="tab" onclick="openMenu(this, 'Goals')">Goals</button>
+            </div>
+                <div class="tabcontent" id="History">
+                    <h3>History</h3>
+                    <p>The notion comes from workers in call centers sitting side by side, the telephones (back in the days of landlines) spaced out along a table, 
+                    like you might remember (if you're old enough) from watching telethons in the 1980s.</p>
+                </div>
+
+                <div class="tabcontent" id="Vision">
+                    <h3>Vision</h3>
+                    <p>But Covid-19 has supercharged texting as a campaign weapon, turning virtual text-banking — where volunteers coordinate their messages and share 
+                    tips while sitting comfortably at home — into this year’s equivalent of knocking on doors or stuffing envelopes.</p>
+                </div>
+
+                <div class="tabcontent" id="Goals">
+                    <h3>Goals</h3>
+                    <p>The notion comes from workers in call centers sitting side by side, the telephones (back in the days of landlines) spaced out along a table, 
+                    like you might remember (if you're old enough) from watching telethons in the 1980s.</p>
+                </div>
+        </div>
+    </div>
+
+    <script>
+        function openMenu(elmnt,pagename){
+            var i,tabcontent,tab;
+
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for(i=0; i< tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }//hide content
+            tab = document.getElementsByClassName("tab");
+            for(i=0; i< tab.length; i++) {
+                tab[i].className = tab[i].className.replace("active");
+            }
+            document.getElementById(pagename).style.display = "block";
+            elmnt.currentTarget.className += "active";
+        }
+        document.getElementById("defaultOpen").click();
+    </script>
+</body>
+</html>
