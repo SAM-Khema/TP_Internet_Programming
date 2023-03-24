@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nationality Guessing</title>
+    <style>
+        .container {
+            width: 50%;
+            text-align: center;
+            padding-top: 50px;
+            margin: auto;
+            padding-bottom: 20px;
+            border: 2px solid black;
+            padding: auto;
+        }
+        .image {
+            align-items: center;
+            margin: auto;
+
+        }
+        #display{
+            width: 50%;
+            align-items: center;
+            text-align: center;
+            margin: auto;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+        .btn {
+            background-color: rgb(0, 60, 255);
+            border-radius: 20px;
+            font-size: medium;
+            font-family: sans-serif;
+            color: aliceblue;
+            width: 100px;
+            height: 30px;
+            border: none;
+        }
+        .name {
+            border-radius: 20px;
+            height: 30px;
+            width: fit-content;
+        }
+        .loading {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            margin: auto;
+            border-top: 16px solid #3498db;
+            width: 20px;
+            height: 20px;
+            -webkit-animation: spin 100ms linear infinite;
+            /* Safari */
+            animation: spin 100ms linear infinite;
+        }
+        #box{
+            padding:10px;
+            background-color: bisque;
+            display:flex;
+            justify-content: space-between;
+            border-radius: 10px;
+            border: 1px solid black;
+            width: 250px; 
+            margin: auto;                                                                                                                                                                                                                               ;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://s-media-cache-ak0.pinimg.com/originals/f8/af/66/f8af667dfd10ac855a58d730b5434332.jpg" alt="home" width="30%">
+        <br>
+        <h1>
+            I know your Home
+        </h1>
+        <br>
+        <input type="text" class="name" id="input" name="name" placeholder="Tell me your firstname">
+        <button class="btn" onclick="guessingNation()">Guess</button>
+        <div id="loading" class="loading" hidden></div>
+        <div id="display" hidden></div>
+     </div>
+
+</body>
+    <script>
+        
+        function guessingNation() {
+    
+        const loadingTextElement = document.getElementById("loading");
+        const inputEle = document.getElementById("input");
+        const displayElement = document.getElementById("display");
+
+        loadingTextElement.hidden = false;
+        displayElement.hidden = true;
+
+        fetch("https://api.nationalize.io/?name="+input.value).then(async (res) => {
+
+            const data = await res.json();
+            console.log(data);
+            let obj = data.country;
+            // displayElement.innerHTML="";
+
+            for(let i of obj){//loops obj to display one by one                                                                                                                                                                                                                         
+                    displayElement.innerHTML +=`
+                    <div id="box">
+                        <div><strong>${i.country_id}</strong></div>
+                        <div><strong>${(i.probability*100).toPrecision(2)}%</strong></div>
+                    </div>`
+                }
+            displayElement.hidden = false;
+
+        }).catch((err) => {
+            console.log(err);//catch the error from fetch with the api
+        }).finally(() => {
+            loadingTextElement.hidden = true; //hold the loading wait until onclick loading then hidden when data appear
+        })
+    }
+</script>
+</html>

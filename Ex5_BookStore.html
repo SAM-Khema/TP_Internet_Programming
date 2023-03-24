@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Store</title>
+    <style>
+        body{
+            display: flex;
+        }
+        .Book{
+            padding: 20px;
+            background-color: rgb(15, 205, 222);
+            border-radius: 5px;
+            width:20%;
+            margin:5px;
+        }
+        p{
+            margin: auto;
+            margin-top: 10px;
+        }
+        button{
+            background-color: wheat;
+            border-radius: 2px;
+            margin-top: 5px;
+            width: fit-content ;
+            border: 2px solid black;
+        }
+        .book_list{
+            /* display: grid; */
+            background-color: rgb(139, 218, 242);
+            width: 80%;
+            /* grid-template-columns: 25% 25% 25% 25%; */
+            padding: 10px;
+        }
+        ul{
+            display:inline-block;
+            /* display: grid; */
+            list-style-type: none;
+        }
+        #box{
+            background-color: rgb(196, 241, 255);
+            border-radius: 10px;
+            width:450px;
+            height:40%;
+            border: 1px solid black;
+            margin:5px;
+            display: inline-block;
+        }
+        .loading {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            margin: auto;
+            border-top: 16px solid #3498db;
+            width: 20px;
+            height: 20px;
+            -webkit-animation: spin 100ms linear infinite;
+            /* Safari */
+            animation: spin 100ms linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+       <div class="Book">
+        <p>Name:</p>
+        <input type="text" id="name" placeholder="Book's name">
+        <p>Category: </p>
+        <input type="text" id="category" placeholder="Type of Book">
+        <p>Price: </p>
+        <input type="text" id="price" placeholder="price">
+        <br><button id="add" onclick="addBook();">Add</button>
+       
+        </div> 
+    
+        <div id="loading" class="loading" hidden>loading</div>
+                        <div id="list_book" >
+                                <ul></ul>
+                        </div>
+
+                </div>
+
+    
+</body>
+<script>
+        function addBook() {
+
+        const loadingTextElement = document.getElementById("loading");
+        const bookEle = document.getElementById("list_book");
+        const displayElement = document.getElementById("display");
+        loadingTextElement.hidden = false;
+        fetch("https://jsonplaceholder.typicode.com/photos")
+        .then(response => {
+            return response.json();
+        }).then((myJson) => {
+            loadingTextElement.hidden = true;
+            console.log(myJson);
+            myJson.forEach(photo => {
+                const markup = `
+                <div id="box">
+                    <li> ${photo.title}</li>
+                    <li> ${photo.albumId}</li>
+                    <li> ${photo.id}</li>
+                    <li>
+                    <a href="${photo.Url}">${photo.Url}</a>
+                    </li>
+                    <li>${photo.thumbnailUrl}</li>
+                    <li><a href="./seemore.html">See more</a></li>
+                </div>
+                    `;   
+         document.querySelector('ul').insertAdjacentHTML('beforeend',markup);
+        });
+    })
+}
+</script>
+
+</script>
+</html>
