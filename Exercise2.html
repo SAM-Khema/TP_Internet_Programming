@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Data sync</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 50px;
+            height: 50px;
+            -webkit-animation: spin 2s linear infinite;
+            /* Safari */
+            margin: auto;
+            animation: spin 2s linear infinite;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="m-auto border w-[60vw] h-[50vh] flex flex-col gap-1 bg-gray-100 p-3 overflow-y-scroll mt-5"
+        id="display">
+        <div class="loader"></div>
+    </div>
+    <script>
+
+        if (!localStorage.getItem('getairline')) {//condition to store local
+            localStorage.setItem('getairline', 0);
+        }
+        console.log(localStorage.getItem('getairline'));
+
+        let disElement = document.getElementById("display");
+        let current = 0;
+        let dataLoading = false;
+        let stobj = "";
+
+        const LoadingData = (page) => {//look for the element to display in the page
+            dataLoading = true;
+            console.log("Page " + page);
+
+            if (localStorage.getItem('getairline') > current) {//store in local
+                const getElement = localStorage.getItem(`airlineP${current}`);
+                let datalocal = JSON.parse(getElement);
+                datalocal.forEach(result => {
+                    stobj += `
+                                        <div class="w-full p-[2.5vh wrapper bg-purple-200 ]">
+                                                <div>🛩: <span class="font-bold">${result.airline[0].name} - ${result.airline[0].country}</span></div>
+                                        <div>🤓: ${result["name"]}</div>
+                                        </div>`
+                });
+                disElement.innerHTML = stobj;
+                current++;
+                dataLoading = false;
+            }
+            else {
+                fetch(`https://api.instantwebtools.net/v1/passenger?page=${page}&size=10`)
+                    .then(async (res) => {
+                        let r = await res.json();
+                        let data = r.data
+                        data.forEach(result => {
+                            console.log(result.airline[0].name)
+                            stobj += `
+                                                    <div class="w-full p-[3.5vh] wrapper bg-purple-200 ">
+                                                            <div>✈: <span class="font-bold">${result.airline[0].name} - ${result.airline[0].country}</span></div>
+                                                            <div> 🤓: ${result["name"]}</div>
+                                                    </div>`
+                        });
+                        disElement.innerHTML = stobj;
+                        current++;
+                        dataLoading = false;
+                    })
+            }
+
+        }
+        disElement.addEventListener("scroll", (event) => {//calculate for text scroll
+            const { scrollTop, clientHeight, scrollHeight } = disElement;
+            if ((clientHeight + scrollTop) >= scrollHeight * 0.95) {
+                if (!dataLoading) {
+                    LoadingData(current);
+                }
+            }
+        });
+        LoadingData(current);
+    </script>
+
+</body>
+
+</html>
