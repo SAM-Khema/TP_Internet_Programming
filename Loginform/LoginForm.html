@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login with cookie</title>
+    <script src="./script.js"></script>
+    <style>
+        body{
+            background-color: whitesmoke;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .container{
+            box-sizing: border-box;
+        }
+        .wrapper{
+            display: block;
+            width: 500px;
+            border: 2px solid black;
+            padding: 20px;
+            /* text-align: center; */
+        }
+        img{
+            width: 320px;
+            
+        }
+        .image{
+            text-align: center;
+        }
+        .info input{
+            padding-left: 0px;
+            margin: 10px 10px 0px 0px;
+            width: 100%;
+            height: 50px;
+        }
+        
+        .info button{
+            
+            border: 2px solid black;
+            color: white;
+            background-color: rgb(4, 213, 4);
+            width: 507px;
+            height: 50px;
+            margin-top: 10px;
+        }
+
+    </style>
+    
+</head>
+<body>
+    <div class="container" id ="container">
+        <p>Login Information</p>
+        <p>Email = gic@gmail.com</p>
+        <p>Password = Gic123</p>
+        <div class="wrapper">
+            <div class="image">
+                <img src="./avartar.jpg" alt="avata">
+            </div>
+            <div class="info">
+                <label for="email">Email</label>
+                <br><input id="email" type="text" placeholder="Enter your email">
+                <label for="pwd">Password</label>
+                <br><input id="pwd" type="text" placeholder="Password">
+            </div>
+            <div class="info">
+                 <button id="login" onclick="login();">Login</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

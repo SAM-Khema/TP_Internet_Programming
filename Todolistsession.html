@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do list</title>
+    <style>
+       .container {
+            border: 2px solid black;
+            width: 45%;
+            /* margin: auto; */
+        }
+        .head {
+            display: flex;
+            justify-content: center;
+        }
+
+        .form {
+            display: flex;
+            /* background-color: aqua; */
+            border-radius: 20px;
+            display: flex;
+            align-items: flex-end;
+            padding: 10px;
+        }
+        .sub-container {
+            background-color: rgb(255, 213, 0);
+            border-radius: 20px;
+        }
+
+        .form input {
+            border-radius: 15px;
+        }
+
+        .form2 {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="head">
+            <h1 style="text-align: center;">TO DO LIST with session storage</h1>
+        </div>
+        <div class="sub-container">
+            <div class="form">
+                <div class="form2">
+                    <div>Task Title</div>
+                    <input id="title" type="text" placeholder="title">
+                </div>
+                <div class="form2">
+                    <div>Assignee</div>
+                    <input id="assignee" type="text" placeholder="name">
+                </div>
+                <div class="form2">
+                    <div> Dateline</div>
+                    <input type="date" type="datetime" name="Dateline" id= "date"placeholder="dd/MM/yyy">
+                </div>
+                <div class="form2">
+                    <button id="add-btn" onclick="addname();"
+                        style="background-color: rgb(0, 128, 15);">Add</button>
+                </div>
+            </div>
+        </div>
+
+    
+    <div id="info"></div>
+</div>
+   <script>
+     var taskArr = [
+            { name: "c++", assignee: "tola", date: "2/34/22" },
+            { name: "Internet Programing", assignee: "minea", date: "2/34/22" }
+        ];
+        // var taskArr = JSON.parse(sessionStorage.getItem("taskArr"));
+
+        function renderList(){
+            var index = 0;
+            document.getElementById("info").innerHTML = "";
+            taskArr.forEach(task => {
+                document.getElementById("info").innerHTML += `
+            <div class="form">
+              <div class="form2">
+                <span>${task?.title}</span>
+                <span>Assignee${task?.assignee}</span>
+                <span>dateline: ${task?.date}</span>
+            </div>
+            <div class = "button">
+                <button onclick="deletetask(${index});">Delete</button>
+            </div>
+
+            </div>`;
+                index++;
+            });
+            // listWrapperEle.innerHTML = listContent;
+        }
+        // renderList();
+
+        function addname(){
+            let id = taskArr.length;
+            let title = document.getElementById('title').value;
+            let assignee = document.getElementById('assignee').value;
+            let date = document.getElementById('date').value;
+
+            let t = {
+                'title': title,
+                'assignee': assignee,
+                'date': date
+            };
+            taskArr.push(t);
+            sessionStorage.setItem("taskArr", JSON.stringify(taskArr));
+            renderList();
+        }
+        // addBtnEle.addEventListener("click", () => {})
+
+        function deletetask(index) {
+            taskArr.splice(index, 1);
+            sessionStorage.setItem("taskArr", JSON.stringify(taskArr));
+            renderList();
+        }
+
+   </script>     
+</body>
+
+</html>

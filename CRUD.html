@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Store</title>
+    
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <style>
+        body{
+            display: flex;
+        }
+        .Book{
+            padding: 20px;
+            background-color: rgb(15, 205, 222);
+            border-radius: 5px;
+            width:20%;
+            margin:5px;
+        }
+        p{
+            margin: auto;
+            margin-top: 10px;
+        }
+        button{
+            background-color: wheat;
+            border-radius: 2px;
+            margin-top: 5px;
+            width: fit-content ;
+            border: 2px solid black;
+        }
+        .book_list{
+            display: grid;
+            background-color: rgb(139, 218, 242);
+            width: 80%;
+            grid-template-columns: 25% 25% 25% 25%;
+            padding: 10px;
+        }
+        .item{
+            background: white;
+            width: 95%;
+            margin: 5px 7px 5px 7px;
+            border-radius: 3px;
+        }
+        .item .button{
+            text-align: right;
+            margin: 5px;
+        }
+        .item .image{
+            text-align: center;
+        }
+        .item .info{
+            text-align: left;
+            margin: 10px 20px;
+        }
+        .dialogbox{
+            font-size: 20px;
+            text-decoration: underline;
+            margin-bottom: 15px;
+        }
+        dialog p{
+            margin: 0px;
+            padding: 0px;
+        }
+        dialog input{
+            margin-bottom: 10px;
+        }
+        dialog button{
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body onload="list();">
+
+       <div class="Book">
+        <p>Name:</p>
+        <input type="text" id="name" placeholder="Book's name">
+
+        <p>Category: </p>
+        <input type="text" id="category" placeholder="Type of Book">
+
+        <p>Price: </p>
+        <input type="text" id="price" placeholder="price">
+        <br><button id="add" onclick="addBook();">Add</button>
+
+        </div> 
+    
+    <div class="book_list" id="list"></div>
+
+    <dialog id="upDialog">
+        <div class="dialogbox">
+            Enter the new info of the BOOK 
+        </div>
+        <p>Name:</p>
+        <input type="text" id="nameUp" placeholder="Book's name">
+        <p>Catagory:</p>
+        <input type="text" id="categoryUp" placeholder="Type of Book">
+        <p>Price:</p>
+        <input type="text" id="priceUp" placeholder="price"><br>
+        <button type="submit" id="submit">Submit</button>
+        <button id="close">Close</button>
+    </dialog>
+
+    <script>
+        var books = [
+    {
+        'name'      : 'BookI1',
+        'category'  :  'English',
+        'price'     : '100'
+        
+    },
+    {
+        'name'      : 'BookI2',
+        'category'  :  'English',
+        'price'     : '100'
+    },
+    {
+        'name'      : 'BookI3',
+        'category'  :  'English',
+        'price'     : '100'
+    },
+    {
+        'name'      : 'BookI4',
+        'category'  :  'English',
+        'price'     : '100'
+    },
+    {
+        'name'      : 'BookI5',
+        'category'  :  'English',
+        'price'     : '100'
+    }
+    
+];
+
+var books = JSON.parse(localStorage.getItem("books"));
+function list(){
+    var index = 0;
+    document.getElementById('list').innerHTML = "";
+    books.forEach(book =>{
+        document.getElementById('list').innerHTML +=
+        `<div class="item">
+            <div class="button">
+                <button onclick="deleteBook(${index});">Delete</button>
+                <button onclick="updateBook(${index});">Change name</button>
+            </div>
+            <div class="image">
+                <img src="./book.jpg" alt="logo" width="50%">
+            </div>
+            <div class="info">
+                 <span>Name: ${book?.name}</span><br>
+                 <span>Category: ${book?.category}</span><br>
+                 <span>Price: ${book?.price} riels</span>
+            </div>
+        </div>`;
+        index++;
+    })
+}
+//add book
+function addBook(){
+    //add new to arr
+    let id = books.length;
+    let name = document.getElementById('name').value;
+    let category = document.getElementById('category').value;
+    let price = document.getElementById('price').value;
+    
+    let book= {
+        'name'      : name,
+        'category'  : category,
+        'price'     : price
+        
+    };
+    books.push(book);
+    localStorage.setItem("books",JSON.stringify(books));
+    list();
+}
+    //update book
+    function updateBook(index){
+        var dialog = document.getElementById('upDialog');
+        dialog.show();
+        document.getElementById('close').onclick = function(){
+            dialog.close();
+        };
+        document.getElementById('submit').onclick = function(){
+            let name = document.getElementById('nameUp').value;
+            let category = document.getElementById('categoryUp').value;
+            let price = document.getElementById('priceUp').value;
+            let b = {
+                'name'  : name,
+                'category'  : category,
+                'price'     : price
+            };
+
+            books.splice(index, 1, b); //delete from list and upload new
+            localStorage.setItem("books", JSON.stringify(books));
+            listing(); 
+            
+            dialog.close();
+        }
+    }
+    //delete
+    function deleteBook(index){
+        books.splice(index,1);
+        localStorage.setItem("books", JSON.stringify(books));
+        list();
+    }
+
+    </script>
+</body>
+</html>
