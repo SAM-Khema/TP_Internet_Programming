@@ -24,5 +24,4 @@ module.exports = Joi.object({
         .min(6)
         .max(20)
         .required()
-
 });

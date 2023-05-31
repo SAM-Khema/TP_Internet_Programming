@@ -14,18 +14,18 @@ router.get('/', function(req,res,next){
 });
 
 //login page
-router.post('/login', joiValidation(loginSchema), async(req,res,next)=>{
-    const param = JSON.parse(req.body);
-    const {email, password} = param;
-    const result = await login(email, password);
+router.post('/login', joiValidation(loginSchema), async(req ,res ,next)=>{
+    // const param = JSON.parse(req.body);
+    const { email, password } = req.body;
+    const result = await login( email, password);
     res.json(result);
 });
 
 //register
 
 router.post('/register', joiValidation(registerSchema), async(req,res,next)=>{
-    const param = JSON.parse(req.body);
-    const result = await register(param);
+    // const param = JSON.parse(req.body);
+    const result = await register(req.body);
     res.json(result);
 });
 

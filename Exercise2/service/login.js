@@ -1,24 +1,28 @@
-const users = require('../models/users')
-const {decryptData} = require('../config/encrypt')
+// const {decryptData} = require('../config/encrypt')
+const readUser = require("../models/users") 
 
-const login = async (email, password) => {
-    try {
-        //check email then check password and give difference
-        var existed = await users.findOne({email})
-        if(!existed){
-            throw "Email is incorrect."
-        } 
-        if(!decryptData(password,existed.password)){
-            throw "Password is incorrect."
+const login = async (email, password) =>{
+        try{
+                var existed = await readUser.findOne({email})
+                if(existed < 0){
+                        throw 'Email is incorrected..'
+                }
+                if (existed.password != password) {
+                        throw "Password is incorrect."
+                }
+                return {
+                        success: true,
+                        data: existed
+                }
         }
-        return {
-            success: true,
-            data: existed
+        catch(err){
+                return{
+                        success: false,
+                        error: err || "error"
+                }
         }
-    } catch (err) {
-        return {
-            success: false,
-            err: err
-        }
-    }
+}
+
+module.exports = {
+        login
 }

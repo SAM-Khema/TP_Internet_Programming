@@ -1,18 +1,19 @@
-const { json } = require("express");
+// const { json } = require("express");
 
-const joiValidation = (schema) => {
-    return async (req, res, next) => {
+const joiValidation = (schema) =>{
+    return async (req, res, next) =>{
         // const param = JSON.parse(req.body);
         try{
-            const body = param;
-            await schema.validateAsync(body);
+            // const body = param;
+            await schema.validateAsync(req.body);
+            next();
         }catch(err){
-            return res.json({
+            res.json({
                 success: false,
-                err: err
+                error: err || 'error'
             })
         }
-        next();
+        
     }
 }
 

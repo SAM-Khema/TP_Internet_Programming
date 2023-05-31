@@ -9,9 +9,9 @@ app.use(cors({
     origin: 'http://localhost:3000'
 }))
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.text())
+app.use(bodyParser.json())
 
-require('./config/db')()
+require('./config/db')();
 app.use(require('./routes'));
 
 app.listen(port, () => console.log(`http://localhost:${port}`));
