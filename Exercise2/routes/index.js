@@ -15,7 +15,6 @@ router.get('/', function(req,res,next){
 
 //login page
 router.post('/login', joiValidation(loginSchema), async(req ,res ,next)=>{
-    // const param = JSON.parse(req.body);
     const { email, password } = req.body;
     const result = await login( email, password);
     res.json(result);
@@ -24,7 +23,6 @@ router.post('/login', joiValidation(loginSchema), async(req ,res ,next)=>{
 //register
 
 router.post('/register', joiValidation(registerSchema), async(req,res,next)=>{
-    // const param = JSON.parse(req.body);
     const result = await register(req.body);
     res.json(result);
 });

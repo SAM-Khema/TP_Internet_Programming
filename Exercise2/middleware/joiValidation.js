@@ -12,8 +12,7 @@ const joiValidation = (schema) =>{
                 success: false,
                 error: err || 'error'
             })
-        }
-        
+        }    
     }
 }
 

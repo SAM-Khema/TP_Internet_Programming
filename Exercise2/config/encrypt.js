@@ -5,7 +5,6 @@ const encryptData = (password) => {
     var hash = bcrypt.hashSync(password, salt);
     return hash
 }
-
 const decryptData = (password, hash) => {
     return bcrypt.compareSync(password, hash);
 }

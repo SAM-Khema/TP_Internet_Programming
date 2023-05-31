@@ -15,3 +15,4 @@ require('./config/db')();
 app.use(require('./routes'));
 
 app.listen(port, () => console.log(`http://localhost:${port}`));
+

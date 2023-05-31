@@ -13,7 +13,7 @@ const register = async (params) => {
         if(existed){
             throw "username is already used"
         }
-        // encryptjs: encrypt password
+        // encryptjs: use for encrypt password
         // var salt = bcrypt.genSaltSync(10);
         // var hash = bcrypt.hashSync("password", salt);
         // var hash = encryptData(password);

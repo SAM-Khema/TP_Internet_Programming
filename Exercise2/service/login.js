@@ -1,6 +1,6 @@
 // const {decryptData} = require('../config/encrypt')
 const readUser = require("../models/users") 
-
+//login check
 const login = async (email, password) =>{
         try{
                 var existed = await readUser.findOne({email})
@@ -22,6 +22,7 @@ const login = async (email, password) =>{
                 }
         }
 }
+
 
 module.exports = {
         login
