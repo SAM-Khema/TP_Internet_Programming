@@ -27,6 +27,20 @@ var item = {
 
     return result;
   }
+  ,
+  async update({ id,name, desc, category }) {
+    const res = await fetch(`http://localhost:3001/item/update/`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                    "Content-type": "application/json",
+            },
+            body: JSON.stringify({_id:id, name, desc, category }),
+    });
+
+    const result = await res.json();
+    return result;
+},
 }
 
 export default item

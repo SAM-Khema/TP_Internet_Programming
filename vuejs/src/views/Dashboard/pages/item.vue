@@ -1,4 +1,4 @@
-<script >
+<script>
 import categoryApi from "@/libs/apis/category";
 import itemApi from "@/libs/apis/item";
 
@@ -10,20 +10,44 @@ export default {
       name: "",
       categoryId: "",
       desc: "",
+      formatLable: "Add new",
+      isonEdit: false,
     };
   },
   methods: {
     async onSubmit(e) {
       e.preventDefault();
-      const { name, desc, categoryId } = this;
-      const result = await itemApi.create({ name, desc, category: categoryId });
+      const { id, name, desc, categoryId } = this;
+      let result;
+      if (!this.isonEdit) {
+        result = await itemApi.create({ name, desc, category: categoryId });
+      } else if (this.isonEdit) {
+        result = await itemApi.update({ id, name, desc, category: categoryId });
+        this.isonEdit = false;
+      }
       if (!result) {
         alert(result.error);
         return;
       }
-
+      this.formatLable = "Add new";
       this.items = await itemApi.all();
       this.name = this.desc = this.categoryId = "";
+    },
+    updateItem(data) {
+      this.id = data._id;
+      this.name = data.name;
+      this.desc = data.desc;
+      this.categoryId = data.categoryId;
+      this.isonEdit = true;
+      this.formatLable = "update";
+    },
+    cancel() {
+      this.id = "";
+      this.name = "";
+      this.desc = "";
+      this.categoryId = "";
+      this.isonEdit = false;
+      this.formatLable = "Add new";
     },
   },
   async mounted() {
@@ -33,7 +57,7 @@ export default {
 };
 </script>
 
-<template >
+<template>
   <main>
     <div class="bg-gray-500 text-white py-2 text-lg text-center">
       <h1>Item</h1>
@@ -69,9 +93,20 @@ export default {
               placeholder="Description"
             />
           </div>
-          <div>
-            <button class="bg-blue-500 text-white p-1 px-2 rounded-md">
-              Add new
+          <div class="flex gap-5">
+            <button
+              type="submit"
+              class="bg-blue-500 text-white p-1 px-2 rounded-md"
+            >
+              {{ formatLable }}
+            </button>
+            <button
+              type="submit"
+              class="bg-blue-500 text-white p-1 px-2 rounded-md"
+              @click="cancel()"
+              v-if="isonEdit"
+            >
+              Cancel
             </button>
           </div>
         </div>
@@ -92,14 +127,18 @@ export default {
           <td>{{ item.desc }}</td>
           <td>
             <div class="flex flex-col space-y-2">
-              <button v-on:click="onupdateItem(item)" class="hover:text-green-600 hover:font-bold">Edit</button>
+              <button
+                v-on:click="updateItem(item)"
+                class="hover:text-green-600 hover:font-bold"
+              >
+                Edit
+              </button>
               <button class="hover:text-green-600 hover:font-bold">
                 Delete
               </button>
             </div>
           </td>
         </tr>
-        
       </table>
     </div>
   </main>

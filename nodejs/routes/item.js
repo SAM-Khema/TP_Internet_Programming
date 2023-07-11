@@ -26,12 +26,16 @@ router.get('/all', async (req, res) => {
 
 router.post('/update', auth.ensureSignedIn, async (req, res, next) => {
   // to do
-  res.json({});
+  const {_id,name, category, desc} = req.body;
+  const result = await itemService.update(_id, {name, category, desc});
+  res.json(result);
 })
 
 router.post('/delete', auth.ensureSignedIn, async (req, res, next) => {
   // to do
-  res.json({});
+  const{_id} = req.body;
+  const result = await itemService.remove({_id});
+  res.json(result);
 })
 
 module.exports = router

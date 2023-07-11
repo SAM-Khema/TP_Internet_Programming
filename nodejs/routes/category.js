@@ -30,13 +30,16 @@ router.get('/all', async (req, res) => {
 })
 
 router.post('/update', auth.ensureSignedIn, async (req, res, next) => {
-  // to do
-  res.json({});
+  const {_id, name, desc, imageUrl} = req.body;
+  const result = await categoryService.update( _id,{name, desc, imageUrl} );
+  res.json(result);
+ 
 })
 
 router.post('/delete', auth.ensureSignedIn, async (req, res, next) => {
-  // to do
-  res.json({});
+  const {_id} = req.body;
+  const result = await categoryService.remove({_id});
+  res.json(result);
 })
 
 module.exports = router

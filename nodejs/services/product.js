@@ -71,16 +71,56 @@ const findAll = async (category = '', item = '') => {
 }
 
 const create = async (newProduct) => {
-  const createdProduct = await Products.create(newProduct);
-  return createdProduct;
+  try {
+    const createproduct = await Products.create(newProduct);
+    return {
+            success: true,
+            msg: "Create successfully",
+            data: createproduct
+    }
+}
+catch (err) {
+    console.log(err);
+    return {
+            success: false,
+            error: JSON.stringify(err) || 'error'
+    }
+}
 }
 
-const update = async () => {
+const update = async (id, { title, category, item, user, imgeUrl,desc }) => {
   // to do
+  try {
+    const update = await Products.findByIdAndUpdate(id, { title, category, item, user, imgeUrl, desc })
+     return {
+             success:true,
+             data: update,
+             msg: "Update successfully!"
+     }
+}
+catch(err){
+     return{
+             success: false,
+             error: err.message
+     }
+}
 }
 
 const remove = async () => {
   // to doF
+  try{
+    await Products.findByIdAndDelete(id)
+    return{
+            success: true,
+            data: "Product delete successfully"
+    }
+}
+catch(err){
+    return{
+            success: false,
+            err: err.message
+    }
+}
 }
 
 module.exports = {

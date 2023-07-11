@@ -35,12 +35,16 @@ router.post('/create', auth.ensureSignedIn, async (req, res,) => {
 
 router.post('/update', auth.ensureSignedIn, async (req, res, next) => {
   // to do
-  res.json({});
+  const {_id, name, category, item, user, imageUrl, desc} = req.body;
+  const result = await productService.update( _id,{name, category, item, user, imageUrl, desc} );
+  res.json(result);
 })
 
 router.post('/delete', auth.ensureSignedIn, async (req, res, next) => {
   // to do
-  res.json({});
+  const {_id} = req.body;
+  const result = await productService.remove({_id});
+  res.json(result);
 })
 
 module.exports = router

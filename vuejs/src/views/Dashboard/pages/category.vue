@@ -1,4 +1,4 @@
-<script >
+<script>
 import categoryApi from "@/libs/apis/category";
 export default {
   data() {
@@ -7,20 +7,49 @@ export default {
       name: "",
       desc: "",
       imageUrl: "",
+      formatLable: "Add new",
+      isonEdit: false,
     };
   },
   methods: {
     async onSubmit(e) {
       e.preventDefault();
-      const { name, desc, imageUrl } = this;
-      const result = await categoryApi.create({ name, desc, imageUrl });
+      const { id, name, desc, imageUrl } = this;
+      let result;
+      if (!this.isonEdit) {
+        result = await categoryApi.create({ name, desc, imageUrl });
+      } else if (this.isonEdit) {
+        result = await categoryApi.update({ id, name, desc, imageUrl });
+        this.isonEdit = false;
+      }
       if (!result) {
         alert(result.error);
         return;
       }
-
+      this.formatLable = "Add new";
       this.categories = await categoryApi.all();
       this.name = this.desc = this.imageUrl = "";
+    },
+    updatecate(data) {
+      this.id = data._id;
+      this.name = data.name;
+      this.desc = data.desc;
+      this.imageUrl = data.imageUrl;
+      this.isonEdit = true;
+      this.formatLable = "update";
+    },
+    cancel() {
+      this.id = "";
+      this.name = "";
+      this.desc = "";
+      this.imageUrl = "";
+      this.isonEdit = false;
+      this.formatLable = "Add new";
+    },
+    async deletecate(cateID) {
+      await categoryApi.delete(cateID);
+      this.categories = await categoryApi.all();
+      this.categories = this.categories.data;
     },
   },
   async mounted() {
@@ -29,7 +58,7 @@ export default {
 };
 </script>
 
-<template >
+<template>
   <main>
     <div class="bg-gray-500 text-white py-2 text-lg text-center">
       <h1>Category</h1>
@@ -70,7 +99,15 @@ export default {
               type="submit"
               class="bg-blue-500 text-white p-1 px-2 rounded-md"
             >
-              Add new
+              {{ formatLable }}
+            </button>
+            <button
+              type="submit"
+              class="bg-blue-500 text-white p-1 px-2 rounded-md"
+              @click="cancel()"
+              v-if="isonEdit"
+            >
+              Cancel
             </button>
           </div>
         </div>
@@ -91,8 +128,16 @@ export default {
           <td>{{ cate.imageUrl }}</td>
           <td>
             <div class="flex flex-col space-y-2">
-              <button v-on:click="onupdateCategory(cate)" class="hover:text-green-600 hover:font-bold">Edit</button>
-              <button class="hover:text-green-600 hover:font-bold">
+              <button
+                class="hover:text-green-600 hover:font-bold"
+                @click="updatecate(cate)"
+              >
+                Edit
+              </button>
+              <button
+                class="hover:text-green-600 hover:font-bold"
+                @click="deletecate(cate)"
+              >
                 Delete
               </button>
             </div>

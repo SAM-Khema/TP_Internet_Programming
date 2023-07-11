@@ -1,12 +1,12 @@
-<script >
+<script>
 import categoryApi from "@/libs/apis/category";
 import itemApi from "@/libs/apis/item";
 import productApi from "@/libs/apis/product";
 import priceApi from "@/libs/apis/price";
-// import Button from "../../../../../../../TP08/vuejs-sample/src/components/Button.vue";
+// import axios from 'axios';
 
 export default {
-  // components: { Button },
+  
   data() {
     return {
       categories: [],
@@ -21,47 +21,40 @@ export default {
       selectedProduct: null,
       price: "",
       source: "",
+      isonEdit: false,
+      formatLable: "Add new",
     };
   },
   methods: {
     async onCreateProduct(e) {
       e.preventDefault();
-      const { title, desc, itemId, categoryId, imageUrl } = this;
-      const result = await productApi.create({
-        title,
-        desc,
-        item: itemId,
-        category: categoryId,
-        imageUrl,
-      });
+      const { id, title, desc, itemId, categoryId, imageUrl } = this;
+      let result;
+      if (!this.isonEdit) {
+        result = await productApi.create({
+          title,
+          desc,
+          item: itemId,
+          category: categoryId,
+          imageUrl,
+        });
+      } else if (this.isonEdit) {
+        result = await productApi.update({
+          id,
+          title,
+          desc,
+          item: itemId,
+          category: categoryId,
+          imageUrl,
+        });
+        this.isonEdit = false;
+      }
+
       if (!result) {
         alert(result.error);
         return;
       }
-
-      this.products = await productApi.all();
-      this.title =
-        this.desc =
-        this.categoryId =
-        this.itemId =
-        this.imageUrl =
-          "";
-    },
-    async onupdateProduct(e) {
-      e.preventDefault();
-      const { title, desc, itemId, categoryId, imageUrl } = this;
-      const result = await productApi.update({
-        title,
-        desc,
-        item: itemId,
-        category: categoryId,
-        imageUrl,
-      });
-      if (!result) {
-        alert(result.error);
-        return;
-      }
-
+      this.formatLable = "Add new";
       this.products = await productApi.all();
       this.title =
         this.desc =
@@ -74,6 +67,26 @@ export default {
       this.priceModalShown = true;
       this.selectedProduct = product;
     },
+    updateproduct(data) {
+      this.id = data._id;
+      this.title = data.title;
+      this.desc = data.desc;
+      this.itemId = data.itemId;
+      this.categoryId = data.categoryId;
+      this.imageUrl = data.imageUrl;
+      this.isonEdit = true;
+      this.formatLable = "update";
+    },
+    cancel() {
+      this.id = "";
+      this.name = "";
+      this.desc = "";
+      this.categoryId = "";
+      this.itemId = "";
+      this.imageUrl = "";
+      this.isonEdit = false;
+      this.formatLable = "Add new";
+    },
     async onAddPrice(e) {
       e.preventDefault();
       const { price, source, selectedProduct } = this;
@@ -82,7 +95,7 @@ export default {
         source,
         product: selectedProduct?._id,
       });
-      
+
       console.log(result);
       if (result.error) {
         alert(result.error);
@@ -91,6 +104,15 @@ export default {
 
       this.products = await productApi.all();
       this.price = this.source = this.selectedProduct = "";
+    },
+    async deleteProduct(Id) {
+      console.log(productId);
+      if (id == productId) {
+        const result = await productApi.delete(productId);
+        return result;
+      } else {
+        return false;
+      }
     },
   },
   async mounted() {
@@ -101,17 +123,22 @@ export default {
 };
 </script>
 
-
-<template >
-  <main class="relative">
+<template>
+  <main class="relative" style="width: 100%">
     <div class="bg-gray-500 text-white py-2 text-lg text-center">
       <h1>Products</h1>
     </div>
     <div class="py-2">
       <form @submit="onCreateProduct" method="post">
-        <div class="flex flex-row py-2 px-2 space-x-1 bg-gray-100">
+        <div class="grid grid-cols-6 py-2 bg-gray-100">
           <div>
-            <input required v-model="title" type="text" placeholder="Title" />
+            <input
+              required
+              v-model="title"
+              type="text"
+              placeholder="Title"
+              class="rounded-lg p-1"
+            />
           </div>
           <div>
             <label for="category">Choose a category:</label>
@@ -119,7 +146,7 @@ export default {
               required
               v-model="categoryId"
               name="category"
-              class="px-2 mx-2 rounded-sm bg-green-100"
+              class="px-2 mx-2 rounded-lg bg-gray-300"
             >
               <option
                 v-for="category in categories"
@@ -136,35 +163,42 @@ export default {
               required
               v-model="itemId"
               name="item"
-              class="px-2 mx-2 rounded-sm bg-green-100"
+              class="px-2 mx-2 rounded-lg bg-gray-300"
             >
               <option v-for="item in items" :key="item.name" :value="item._id">
                 {{ item.name }}
               </option>
             </select>
           </div>
-          <div>
+          <div class="pr-32">
             <input
               required
               v-model="imageUrl"
               type="text"
               placeholder="ImageURL"
+              class="rounded-lg p-1"
             />
           </div>
-          <div>
+          <div class="pl-8">
             <input
               required
               v-model="desc"
               type="text"
               placeholder="Description"
+              class="rounded-lg p-1"
             />
           </div>
-          <div>
+          <div class="flex gap-2 pl-12">
+            <button type="submit" class="bg-blue-500 text-white p-1 rounded-md">
+              {{ formatLable }}
+            </button>
             <button
               type="submit"
-              class="bg-blue-500 text-white p-1 px-2 rounded-md"
+              class="bg-blue-500 text-white p-1 rounded-md"
+              @click="cancel()"
+              v-if="isonEdit"
             >
-              Add new
+              Cancel
             </button>
           </div>
         </div>
@@ -194,11 +228,22 @@ export default {
           </td>
           <td>{{ product.category?.name }}</td>
           <td>{{ product.item?.name }}</td>
-          <td>{{ product.imageUrl }}</td>
+          <td>
+            <img
+              :src="product.imageUrl"
+              alt=""
+              style="width: 100px; height: 100px; padding: 5px"
+            />
+          </td>
           <td>{{ product.desc }}</td>
           <td>
             <div class="flex flex-col space-y-2">
-              <button v-on:click="onupdateProduct(product)" class="hover:text-green-600 hover:font-bold">Edit</button>
+              <button
+                class="hover:text-green-600 hover:font-bold"
+                @click="updateproduct(product)"
+              >
+                Edit
+              </button>
               <button class="hover:text-green-600 hover:font-bold">
                 Delete
               </button>
@@ -216,16 +261,7 @@ export default {
 
     <div
       v-if="priceModalShown && selectedProduct"
-      class="
-        flex
-        justify-center
-        items-center
-        absolute
-        top-0
-        left-0
-        bottom-0
-        right-0
-      "
+      class="flex justify-center items-center absolute top-0 left-0 bottom-0 right-0"
     >
       <div class="w-72 h-96 bg-white rounded-lg shadow-md">
         <form @submit="onAddPrice" method="post">
@@ -260,27 +296,13 @@ export default {
             <div class="flex flex-grow-0 py-1 justify-center space-x-2">
               <button
                 v-on:click="priceModalShown = false"
-                class="
-                  p-2
-                  px-3
-                  text-gray-500
-                  rounded-md
-                  cursor-pointer
-                  border border-gray-100
-                "
+                class="p-2 px-3 text-gray-500 rounded-md cursor-pointer border border-gray-100"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                class="
-                  bg-blue-500
-                  p-2
-                  px-3
-                  text-white
-                  rounded-md
-                  cursor-pointer
-                "
+                class="bg-blue-500 p-2 px-3 text-white rounded-md cursor-pointer"
               >
                 Add
               </button>
